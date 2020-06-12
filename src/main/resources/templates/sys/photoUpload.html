@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>个人资料站</title>
+    <link th:href="@{/css/layui.css}" rel="stylesheet">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">BALABALA</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a th:href="@{/a/manage}">资料破站</a></li>
+            <li class="layui-nav-item"><a href="">随手记</a></li>
+            <li class="layui-nav-item"><a th:href="@{/a/Orc}">工具</a></li>
+            <!-- <li class="layui-nav-item">
+                 <a href="javascript:;">其它系统</a>
+                 <dl class="layui-nav-child">
+                     <dd><a href="">邮件管理</a></dd>
+                     <dd><a href="">消息管理</a></dd>
+                     <dd><a href="">授权管理</a></dd>
+                 </dl>
+             </li>-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-body">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">图片文件</label>
+                <div class="layui-input-block" id="table_refresh" th:fragment="table_refresh">
+                    <input class="layui-input" type="file" name="picFile" id="picFile" onchange="toBase64()"/>
+                    <input class="layui-btn" type="button" id="submit" value="识别"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">识别内容</label>
+                <div class="layui-input-block" id="result">
+                </div>
+            </div>
+        </div>
+        <!-- 内容主体区域 -->
+<!--        <div id="table_refresh" th:fragment="table_refresh">
+            <input type="file" name="picFile" id="picFile" onchange="toBase64()"/>
+            <input type="button" id="submit" value="识别"/>
+            <p id="result"></p>
+
+            &lt;!&ndash;g0admin&ndash;&gt;</div>-->
+        <!--<div style="padding: 15px;">内容主体区域</div>-->
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/a_base.js}"></script>
+<script th:src="@{/js/a_tomask.js}"></script>
+<script th:src="@{/layui.js}"></script>
+<!--<script src="../src/layui.js"></script>-->
+<script>
+    var ctxPath='[[${#httpServletRequest.getContextPath()}]]';
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+
+    var base64;
+    function toBase64(){
+        var temp = document.getElementById("picFile");
+        var fileRearder = new FileReader();
+        fileRearder.readAsDataURL(temp.files[0]);
+        fileRearder.onload = function (){
+            base64 = this.result;
+            console.log(base64)
+        }
+    }
+    $("#test").click(function () {
+        // toBase64(document.getElementById("picFile"))
+        //var files = $("#picFile");
+        debugger
+        var objFile = document.getElementById("picFile");
+        // 装载局部刷新返回的页面
+        // var file = objFile.files[0];
+        var picTxt = toBase64(objFile);
+        $('#table_refresh').load("/a/test/orc");
+        // var reqJson = new Object();
+        // reqJson.userId = "232323";
+        // var reqData = reorganizeParams(reqJson);
+        //     $.ajax({
+        //         type:"POST",
+        //         url:"http://127.0.0.1:8080/cfrmg/restfull/basesmp/KINGWORKS_002_000_001",
+        //         data:{'reqJson':reqData
+        //         },
+        //         dataType:"JSON",
+        //         success:function (result) {
+        //             debugger
+        //             $("#result2").text(result);
+        //         },
+        //         error:function (result) {
+        //             console.log(result)
+        //         }
+        //     })
+
+        // $("#testForm").submit();
+    })
+
+    $("#submit").click(function () {
+        //toBase64(document.getElementById("picFile"))
+        //var files = $("#picFile");
+        // debugger
+        // var objFile = document.getElementById("picFile");
+        // // 装载局部刷新返回的页面
+        // var file = objFile.files[0];
+        // var picTxt = toBase64(objFile);
+        // $('#table_refresh').load("/dev/test/orc");
+
+        $.ajax({
+            type:"POST",
+            url:ctxPath+"/a/test/orc",
+            data:{
+                "picTxt":base64
+            },
+            success:function (result) {
+                debugger
+                var obj = JSON.parse(result);
+                var showDiv = document.getElementById("result");
+                var str = '';
+                for(var i=0;i<obj.words_result.length;i++){
+                    str += '<p>'+obj.words_result[i].words+'</p>';
+                }
+                showDiv.innerHTML= str;
+            },
+            error:function (result) {
+                console.log(result)
+            }
+        })
+
+        // $("#testForm").submit();
+    })
+
+    // function upload() {
+    //     var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
+    //     var url = getRootPath()+"/ckfinder/ckfinder.html?type=${ctype}&start=${ctype}:${uploadPath}/"+year+"/"+month+
+    //         "/&action=js&func=${input}SelectAction&thumbFunc=${input}ThumbSelectAction&cb=${input}Callback&dts=${type eq 'thumb'?'1':'0'}&sm=${selectMultiple?1:0}";
+    //     windowOpen(url,"文件管理",1000,700);
+    //     //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
+    //
+    // }
+
+    function getRootPath() {
+
+        var pathName = window.location.pathname.substring(1);
+
+        var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+
+        return window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+
+    }
+
+    function reorganizeParams(reqJson){
+        var header = new Object();
+        if(sessionid != null){
+            header.sessionid = sessionid;
+        }else{
+            header.sessionid = "";
+        }
+
+        var reqData = new Object();
+        if(reqJson != null){
+            reqData.body = reqJson;
+        }else{
+            reqData.body = "";
+        }
+        reqData.header = header;
+
+        return jQstringifyes(reqData);
+    }
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjcectURL != undefined) {
+            url = window.createOjcectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+</script>
+</body>
+</html>

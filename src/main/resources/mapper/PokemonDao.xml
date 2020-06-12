@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.modules.pokemon.dao.PokemonDao">
+
+
+    <select id="findList" resultType="com.zhu.modules.pokemon.entity.Pokemon">
+        SELECT
+        a.id,
+        a. NO,
+        a. NAME,
+        a.type1,
+        a.type2,
+        b. NAME AS t1,
+        c. NAME AS t2,
+        d. NAME AS t0,
+        a.HP,
+        a.ATK,
+        a.DEF,
+        a.SAT,
+        a.SDF,
+        a.SPD,
+        a.TOTAL
+        FROM
+        pk_pokemon a
+        LEFT JOIN pk_ability b ON a.t1 = b.id
+        LEFT JOIN pk_ability c ON a.t2 = c.id
+        LEFT JOIN pk_ability d ON a.t0 = d.id
+        WHERE
+        1 = 1
+        <if test="name != null and name != ''">
+            and a.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="type1 != null and type1 != ''">
+            and (a.type1 = #{type1} or a.type2 = #{type1})
+        </if>
+        <if test="no != null and no != ''">
+            and a.no = #{no}
+        </if>
+        and a.is_eight = '1'
+        order by a.no
+    </select>
+    <insert id="insert">
+insert into pk_pokemon(
+			id,
+			no,
+			name,
+			type1,
+			type2,
+			t1,
+			t2,
+			t0,
+			hp,
+			atk,
+			def,
+			sat,
+			sdf,
+			spd,
+			total,
+			is_eight
+		) values(
+			#{id},
+			#{no},
+			#{name},
+			#{type1},
+			#{type2},
+			#{t1},
+			#{t2},
+			#{t0},
+			#{hp},
+			#{atk},
+			#{def},
+			#{sat},
+			#{sdf},
+			#{spd},
+			#{total},
+			'1'
+		)
+    </insert>
+
+    <update id="update">
+		update pk_pokemon set
+			name = #{name},
+			no = #{no},
+			type1 = #{type1},
+			type2 = #{type2},
+			hp = #{hp},
+			atk = #{atk},
+			def = #{def},
+			sat = #{sat},
+			sdf = #{sdf},
+			spd = #{spd},
+			total = #{total}
+			where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.zhu.modules.pokemon.entity.Pokemon">
+        SELECT
+        a.id,
+        a. NO,
+        a. NAME,
+        a.type1,
+        a.type2,
+        b. NAME AS t1,
+        c. NAME AS t2,
+        d. NAME AS t0,
+        a.HP,
+        a.ATK,
+        a.DEF,
+        a.SAT,
+        a.SDF,
+        a.SPD,
+        a.TOTAL
+        FROM
+        pk_pokemon a
+        LEFT JOIN pk_ability b ON a.t1 = b.id
+        LEFT JOIN pk_ability c ON a.t2 = c.id
+        LEFT JOIN pk_ability d ON a.t0 = d.id
+        WHERE
+        <if test="id != null and id != ''">
+            a.id = #{id}
+        </if>
+    </select>
+</mapper>
