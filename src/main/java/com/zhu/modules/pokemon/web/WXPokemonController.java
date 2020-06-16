@@ -33,5 +33,6 @@ public class WXPokemonController {
         map.put("list",list);
         return map;
     }
-    
+
+
 }

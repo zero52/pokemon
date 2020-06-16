@@ -1,0 +1,64 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://62.234.157.168:3306/pokemon?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: Ideapadlenovo-199352
+  redis:
+    host: 62.234.157.168
+    port: 6379
+    timeout: 10000ms
+    database: 0
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-wait: -1ms
+#        max-idle: 8
+#        min-idle: 0
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    listener:
+      simple:
+        acknowledge-mode: manual
+    username: guest
+    password: guest
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zhu.modules.*.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  thymeleaf:
+    cache: true
+
+adminPath: /a
+
+server:
+  servlet:
+    context-path: /dev
+  port: 8090
+logging:
+  level:
+    com.zhu.modules.*.dao: debug
+
+info:
+  blog-url: http://localhost:8090/dev/manage
+  author: ZHU
+  version: 1.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  server:
+    port: 8004
+    servlet:
+      context-path: / # 只有在设置了 management.server.port 时才有效
+
+file:
+  staticAccessPath: /upload/
+  uploadFolder: d://upload/

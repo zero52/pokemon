@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit|ie-stand"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=edge,chrome=1"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="x5-page-mode" content="app"/>
+    <meta name="browsermode" content="application"/>
+    <meta name="wap-font-scale" content="no"/>
+    <link th:href="@{/skin/a_nlkf.css}" rel="stylesheet">
+    <title>宝可梦列表</title>
+</head>
+<body id="nl_wode">
+
+
+<div class="jsall scr bgk2 jstogs">
+
+    <div class="g1here">
+        <h4 class="g1mbx cf">
+            <b class="g1wz">当前位置 >> 我的能力 >> 宝可梦列表</b>
+        </h4>
+        <!-- g1here --></div>
+
+
+    <div class="g1cnt cf">
+
+        <form class="g1form rel z3 mt15 cf b bgw2 r" method="post" th:object="${pokemon}" th:action="@{'/pokemon/list'}">
+            <ul class="fib tkz6 fb2 fz2 cf">
+
+                <li>
+                    <label>编号：</label>
+                    <input class="ipu ipua w9 r" placeholder="编号" type="text" name="no" th:value="${pokemon.no}"/>
+                </li>
+
+                <li>
+                    <label>名称：</label>
+                    <input class="ipu ipua w9 r" placeholder="名称" name="name" type="text" th:value="${pokemon.name}"/>
+                </li>
+
+                <li>
+                    <label>属性：</label>
+                    <select class="sct scta r" name="type1" id="type1" lay-verify="" >
+                        <option value="" class="s">请选择</option>
+                       <option class="s" th:each="dict:${DictUtils.getDictList('pk_type')}" th:selected="${dict.value == type1}"    th:value="${dict.value}" th:text="${dict.label}"></option>
+                    </select>
+                    <!--<p class="sct scta r" swi="auto" pre="" id="">
+                        <b class="s">请选择</b><i class="v"></i>
+                        <input class="kv" name="type1" value="" type="hidden"/>
+                        <b class="c" th:each="dict:${DictUtils.getDictList('pk_type')}">
+                           &lt;!&ndash; <i class="t" >全部分类</i>&ndash;&gt;
+                            <i class="t" th:rel="${dict.value}" th:text="${dict.label}"></i>
+                        </b>
+                    </p>-->
+                </li>
+
+                <li>
+                    <!--<a class="btn btnbz w6 r jstomask" th:href="@{'/pokemon/list'}" id="">查询</a>-->
+                    <input class="btn btnbz" type="submit" value="查询">
+                </li>
+
+            </ul>
+        </form>
+
+
+
+
+        <div class="g1mod mt6">
+            <h3 class="g1mh imh imh12">我的能力清单</h3>
+            <div class="cotb mt15 tb6bb0">
+                <table class="tb6">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>属性</th>
+                        <th>特性</th>
+                        <th>隐藏特性</th>
+                        <th>HP</th>
+                        <th>攻击</th>
+                        <th>防御</th>
+                        <th>特攻</th>
+                        <th>特防</th>
+                        <th>速度</th>
+                        <th>总计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="list:${list}">
+                        <td th:text="${list.name}"></td>
+                        <td>
+                            <div th:if="${list.type1}" th:style="'display:inline-block;color:#000000;padding: 5px 10px;margin: 5px;width: 4em;background:' + ${DictUtils.getDictLabels(list.type1,'pk_color','#ffffff')} + ''" th:text="${DictUtils.getDictLabels(list.type1,'pk_type','--')}"></div>
+                            <div th:if="${list.type2}" th:style="'display:inline-block;color:#000000;padding: 5px 10px;margin: 5px;width: 4em;background:' + ${DictUtils.getDictLabels(list.type2,'pk_color','#ffffff')} + ''" th:text="${DictUtils.getDictLabels(list.type2,'pk_type','--')}"></div>
+                        </td>
+                        <td>
+                            <div th:if="${list.t1}" style="display: inline-block;padding: 5px 10px;margin: 5px;" th:text="${list.t1}"></div>
+                            <div th:if="${list.t2}" style="display: inline-block;padding: 5px 10px;margin: 5px;" th:text="${list.t2}"></div>
+                        </td>
+                        <td th:text="${list.t0}"></td>
+                        <td th:text="${list.hp}"></td>
+                        <td th:text="${list.atk}"></td>
+                        <td th:text="${list.def}"></td>
+                        <td th:text="${list.sat}"></td>
+                        <td th:text="${list.sdf}"></td>
+                        <td th:text="${list.spd}"></td>
+                        <td th:text="${list.total}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- cotb --></div>
+            <!--g1mod --></div>
+
+        <!-- g1cnt --></div>
+
+    <!--jsall screen --></div>
+
+<!--为提高页面渲染和防止js阻塞，请统一将js放在页面尾部！ feilong -->
+
+
+<!-- 公用js-->
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/a_base.js}"></script>
+<script th:src="@{/plugins/my97/WdatePicker.js}" charset="utf-8"></script>
+<script th:src="@{/js/a_tomask.js}"></script>
+
+<!-- 本页独有js-->
+<script>
+    $(function(){//0
+
+
+        /* to show #flmask4 in parent true */
+        a0all.on('click','.jstomask',function(ev){
+            ev.preventDefault();
+            var jstomasks=a0all.find('.jstomask').removeClass('on');
+            var jstomask=$(ev.currentTarget).addClass('on');
+            a0tomask(jstomask,'#flmask4',true);
+        });
+
+        /*sct usage */
+        function a1scton(i,trel,oldkv,t,j){
+            console.log('i,trel,oldkv,t,j = ','此sct索引值'+i+', 新t值'+trel+', 旧t值'+oldkv+', 点的第'+j+'个t');
+
+        }
+        flscts('.sct',a1scton);
+
+
+        //日期格式判断
+        $('#gotj').on('click',function(ev){
+            var dateby=$(this).attr('dateby');
+
+            if(dateby=='period'){
+                var a0day0=$('#a0day0').val();
+                var a0day1=$('#a0day1').val();
+                dateis=a0day0!==''?[a0day0,a0day1]:'0';
+            }else if(dateby=='yue'){
+                dateis=$('#a0month').val();
+            }else if(dateby=='zhou'){
+                dateis=$('#a0week').val();
+            }else if(dateby=='ri'){
+                dateis=$('#a0day').val();
+            }
+            console.log('dateby=',dateby,'&& dateis=',dateis);
+
+            if(dateis!=''){
+                //开始请求数据，返回，改变下面的表格数据内容
+            }else{
+                alert('统计时间不能为空');
+            }
+        });
+
+    });	//0
+
+</script>
+
+
+
+</body>
+</html>

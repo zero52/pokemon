@@ -1,0 +1,4 @@
+.Wdate{background-image:url(datePicker.png);background-repeat:no-repeat;
+background-position:right center;background-size:22px 22px;}
+.Wdate::-ms-clear{display:none}
+.WdateFmtErr{font-weight:700;color:red}

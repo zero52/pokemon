@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit|ie-stand"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=edge,chrome=1"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="x5-page-mode" content="app"/>
+    <meta name="browsermode" content="application"/>
+    <meta name="wap-font-scale" content="no"/>
+    <link th:href="@{/skin/a_nlkf.css}" rel="stylesheet">
+    <title>精灵宝可梦wiki</title>
+
+</head>
+<body id="n0backend">
+
+<div class="jsall scr i0all">
+
+
+    <div class="heado2">
+        <div class="head2 cf">
+            <a class="logo2 ht" th:href="@{index.html}">精灵宝可梦</a>
+            <p class="cut2 cf">
+                <a class="i0log2" th:href="@{my_log.html}">登录</a>
+                <a class="i0reg2" th:href="@{my_reg.html}">注册</a>
+            </p>
+            <ul class="nav2 cf">
+                <li><a th:href="@{index.html}">首页</a></li>
+                <li><a th:href="@{help.html}">帮助中心</a></li>
+                <li><a th:href="@{'/manage'}">管理中心</a></li>
+                <li class="on"><a th:href="@{'/Orc'}">功能测试</a></li>
+            </ul>
+            <!-- head2 --></div>
+        <!-- heado2 --></div>
+
+    <div class="g0admin" id="table_refresh" th:fragment="table_refresh">
+        <input type="file" name="picFile" id="picFile" onchange="toBase64()">
+        <input type="button" id="submit" value="识别">
+       <!-- <p id="result">111111</p>-->
+
+    <!--g0admin--></div>
+
+<!--    <div>
+        <input type="button" id="test" value="ssssss"/>
+        <p id="result2">222</p>
+    </div>-->
+
+
+    <!--jsall screen --></div>
+
+
+
+<div class="mask vh tac" id="flmask4">
+    <i class="maskbg"></i>
+    <div class="inb maskin tal"></div><i class="inb ht1"></i>
+    <!--mask --></div>
+
+<div class="mask vh tac" id="flmask6">
+    <i class="maskbg"></i>
+    <div class="inb maskin tal"></div><i class="inb ht1"></i>
+    <!--mask --></div>
+
+<div class="mask vh tac" id="flmask8">
+    <i class="maskbg"></i>
+    <div class="inb maskin tal"></div><i class="inb ht1"></i>
+    <!--mask --></div>
+
+
+
+
+
+<!--为提高页面渲染和防止js阻塞，请统一将js放在页面尾部！ feilong -->
+
+
+<!-- 公用js-->
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/a_base.js}"></script>
+
+
+<!-- 本页独有js-->
+<script th:src="@{/js/a_tomask.js}"></script>
+<script>
+
+    /*0*/$(function(){
+
+
+
+
+        /**左侧菜单 **/
+        /**页头的 menu 菜单 js做法 **/
+        var jsmnhhdr=function(w,os,o,ps,p,oi,ots,pts){
+            console.log('jsmnhhdr=',o.html());
+        };a0Togs('#i0menu','.jsmnh','.jsmnp');
+        var menuhdr=function(w,os,o,oi,ots){
+        };a0Alt('#i0menu','.jsmna');
+
+
+        /* 页头的 menu 菜单 css 做法
+        var jsmnahdr=function(w,os,o,oi,ots){
+            $('#i0menu .jsmna').removeClass('on');
+            o.addClass('on');
+            $('#i0menu .jsmnh').removeClass('on');
+            o.closest('li').find('.jsmnh').addClass('on');
+        };a0Alt('#i0menu','.jsmna,.mnhsy',jsmnahdr);
+         */
+
+
+
+
+        /**蒙版 **/
+        /*mask.html, to shut flmask4 */
+        a0shutmask('#flmask4 .maskshut','#flmask4',false);
+
+        /*mask.html, to shut flmask6 */
+        a0shutmask('#flmask6 .maskshut','#flmask6',false);
+
+        /*mask.html, to shut flmask8 */
+        a0shutmask('#flmask8 .maskshut','#flmask8',false);
+
+
+
+
+
+    });/*0*/
+    var base64;
+    function toBase64(){
+        var temp = document.getElementById("picFile");
+        var fileRearder = new FileReader();
+        fileRearder.readAsDataURL(temp.files[0]);
+        fileRearder.onload = function (){
+            base64 = this.result;
+            console.log(base64)
+        }
+    }
+    $("#test").click(function () {
+        // toBase64(document.getElementById("picFile"))
+        //var files = $("#picFile");
+        debugger
+        var objFile = document.getElementById("picFile");
+        // 装载局部刷新返回的页面
+        // var file = objFile.files[0];
+        var picTxt = toBase64(objFile);
+        $('#table_refresh').load("/dev/test/orc");
+        // var reqJson = new Object();
+        // reqJson.userId = "232323";
+        // var reqData = reorganizeParams(reqJson);
+        //     $.ajax({
+        //         type:"POST",
+        //         url:"http://127.0.0.1:8080/cfrmg/restfull/basesmp/KINGWORKS_002_000_001",
+        //         data:{'reqJson':reqData
+        //         },
+        //         dataType:"JSON",
+        //         success:function (result) {
+        //             debugger
+        //             $("#result2").text(result);
+        //         },
+        //         error:function (result) {
+        //             console.log(result)
+        //         }
+        //     })
+
+        // $("#testForm").submit();
+    })
+
+    $("#submit").click(function () {
+        //toBase64(document.getElementById("picFile"))
+        //var files = $("#picFile");
+        // debugger
+        // var objFile = document.getElementById("picFile");
+        // // 装载局部刷新返回的页面
+        // var file = objFile.files[0];
+        // var picTxt = toBase64(objFile);
+        // $('#table_refresh').load("/dev/test/orc");
+
+        $.ajax({
+            type:"POST",
+            url:"/dev/test/orc",
+            data:{
+                "picTxt":base64
+            },
+            success:function (result) {
+                debugger
+                $("#result").text(result.message);
+            },
+            error:function (result) {
+                console.log(result)
+            }
+        })
+
+        // $("#testForm").submit();
+    })
+    
+    // function upload() {
+    //     var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
+    //     var url = getRootPath()+"/ckfinder/ckfinder.html?type=${ctype}&start=${ctype}:${uploadPath}/"+year+"/"+month+
+    //         "/&action=js&func=${input}SelectAction&thumbFunc=${input}ThumbSelectAction&cb=${input}Callback&dts=${type eq 'thumb'?'1':'0'}&sm=${selectMultiple?1:0}";
+    //     windowOpen(url,"文件管理",1000,700);
+    //     //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
+    //
+    // }
+
+    function getRootPath() {
+
+        var pathName = window.location.pathname.substring(1);
+
+        var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+
+        return window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+
+    }
+
+    function reorganizeParams(reqJson){
+        var header = new Object();
+        if(sessionid != null){
+            header.sessionid = sessionid;
+        }else{
+            header.sessionid = "";
+        }
+
+        var reqData = new Object();
+        if(reqJson != null){
+            reqData.body = reqJson;
+        }else{
+            reqData.body = "";
+        }
+        reqData.header = header;
+
+        return jQstringifyes(reqData);
+    }
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjcectURL != undefined) {
+            url = window.createOjcectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+</script>
+
+</body>
+</html>

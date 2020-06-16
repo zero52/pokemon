@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit|ie-stand"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=edge,chrome=1"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="x5-page-mode" content="app"/>
+    <meta name="browsermode" content="application"/>
+    <meta name="wap-font-scale" content="no"/>
+    <link th:href="@{/skin/a_nlkf.css}" rel="stylesheet">
+    <title>技能列表</title>
+</head>
+<body>
+<div class="jsall scr bgk2 jstogs">
+
+    <div class="g1here">
+        <h4 class="g1mbx cf">
+            <b class="g1wz">当前位置 >> 我的能力 >> 技能列表</b>
+        </h4>
+        <!-- g1here --></div>
+
+
+    <div class="g1cnt cf">
+
+        <form class="g1form rel z3 mt15 cf b bgw2 r" method="post" th:action="@{'/skill/list'}" th:object="${skill}">
+            <ul class="fib tkz6 fb2 fz2 cf">
+
+                <li>
+                    <label>名称：</label>
+                    <input class="ipu ipua w9 r" placeholder="名称" name="name" type="text" th:value="${skill.name}"/>
+                </li>
+                <li>
+                    <label>属性：</label>
+                    <input class="ipu ipua w9 r" placeholder="属性" name="type" type="text" th:value="${skill.type}"/>
+                </li>
+
+
+                <li>
+                    <label>分类：</label>
+                    <input class="ipu ipua w9 r" placeholder="分类" name="category" type="text" th:value="${skill.category}"/>
+                </li>
+
+                <!-- 			<li>
+                                <label>分类：</label>
+                                <p class="sct scta r" swi="auto" pre="" id="">
+                                    <b class="s">请选择</b><i class="v"></i>
+                                    <input class="kv" name="ccc" value="" type="hidden"/>
+                                    <b class="c">
+                                        <i class="t">全部分类</i>
+                                        <i class="t" rel="a">查询类</i>
+                                        <i class="t" rel="b">订购类</i>
+                                        <i class="t" rel="b">支付类</i>
+                                        <i class="t" rel="b">积分类</i>
+                                    </b>
+                                </p>
+                            </li> -->
+
+                <!-- 			<li title="从哪一天到哪一天">
+                                <label>申请时间：</label>
+                                <input id="a0day0" placeholder="开始日期" class="Wdate ipu ipua w9 r" type="text" onFocus="var a0day1=$dp.$('a0day1');WdatePicker({onpicked:function(){a0day1.focus();},maxDate:'#F{$dp.$D(\'a0day1\')}'})"/>
+                                <i class="inb">至</i>
+                                <input id="a0day1" placeholder="结束日期" class="Wdate ipu ipua w9 r" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'a0day0\')}'})"/>
+                            </li> -->
+
+                <!-- 			<li>
+                                <label>申请状态：</label>
+                                <p class="sct scta r" swi="auto" pre="" id="">
+                                    <b class="s">请选择</b><i class="v"></i>
+                                    <input class="kv" name="ccc" value="" type="hidden"/>
+                                    <b class="c">
+                                        <i class="t">全部</i>
+                                        <i class="t" rel="a">子类a</i>
+                                        <i class="t" rel="b">子类b</i>
+                                    </b>
+                                </p>
+                            </li> -->
+
+                <li>
+                    <input class="btn btnbz" type="submit" value="查询">
+                </li>
+
+            </ul>
+        </form>
+
+
+        <div class="g1mod mt6">
+            <h3 class="g1mh imh imh12">技能列表</h3>
+            <div class="cotb mt15 tb6bb0">
+                <table class="tb6">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>属性</th>
+                        <th>分类</th>
+                        <th>威力</th>
+                        <th>命中</th>
+                        <th>PP</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="list:${list}">
+                            <td th:title="${list.effect}" th:text="${list.name }"></td>
+                            <td >
+                                <div th:style="'display:inline-block;color:#000000;padding: 5px 10px;margin: 5px;width: 4em;background:' + ${DictUtils.getDictLabels(list.type,'pk_color','#ffffff')} + ''" th:text="${DictUtils.getDictLabels(list.type,'pk_type','--')}"></div>
+                            </td>
+                            <td th:text="${DictUtils.getDictLabels(list.category,'pk_skill_category','--')}"></td>
+                            <td th:if="${list.power}" th:text="${list.power}"></td>
+                            <td th:unless="${list.power}" th:text="--"></td>
+                            <td th:if="${list.dex}" th:text="${list.dex}"></td>
+                            <td th:unless="${list.dex}" th:text="--"></td>
+                            <td th:text="${list.pp}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- cotb --></div>
+            <!--g1mod --></div>
+
+        <!-- g1cnt --></div>
+
+
+    <!--jsall screen --></div>
+
+
+<!--为提高页面渲染和防止js阻塞，请统一将js放在页面尾部！ feilong -->
+
+
+<!-- 公用js-->
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/a_base.js}"></script>
+<script th:src="@{/plugins/my97/WdatePicker.js}" charset="utf-8"></script>
+<script th:src="@{/js/a_tomask.js}"></script>
+
+<!-- 本页独有js-->
+<script>
+    $(function(){//0
+
+
+        /* to show #flmask4 in parent true */
+        a0all.on('click','.jstomask',function(ev){
+            ev.preventDefault();
+            var jstomasks=a0all.find('.jstomask').removeClass('on');
+            var jstomask=$(ev.currentTarget).addClass('on');
+            a0tomask(jstomask,'#flmask4',true);
+        });
+
+        /*sct usage */
+        function a1scton(i,trel,oldkv,t,j){
+            console.log('i,trel,oldkv,t,j = ','此sct索引值'+i+', 新t值'+trel+', 旧t值'+oldkv+', 点的第'+j+'个t');
+
+        }
+        flscts('.sct',a1scton);
+
+
+        //日期格式判断
+        $('#gotj').on('click',function(ev){
+            var dateby=$(this).attr('dateby');
+
+            if(dateby=='period'){
+                var a0day0=$('#a0day0').val();
+                var a0day1=$('#a0day1').val();
+                dateis=a0day0!==''?[a0day0,a0day1]:'0';
+            }else if(dateby=='yue'){
+                dateis=$('#a0month').val();
+            }else if(dateby=='zhou'){
+                dateis=$('#a0week').val();
+            }else if(dateby=='ri'){
+                dateis=$('#a0day').val();
+            }
+            console.log('dateby=',dateby,'&& dateis=',dateis);
+
+            if(dateis!=''){
+                //开始请求数据，返回，改变下面的表格数据内容
+            }else{
+                alert('统计时间不能为空');
+            }
+        });
+
+
+
+
+
+
+
+    });	//0
+
+</script>
+</body>
+</html>
